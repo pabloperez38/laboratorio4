@@ -26,6 +26,22 @@ $usuario = ControladorUsuarios::ctrSeleccionarUsuarios($item, $valor);
         <input type="password" class="form-control" name="editarPassword">
     </div>
 
+    <div class="form-group" >
+
+    <select name="tipo" class="form-control">
+
+        <option value="">Seleccionar</option>
+
+        <?php $tipo = ControladorTipo::ctrSeleccionarTipo(); 
+
+        foreach ($tipo as $key => $value) { ?>
+
+            <option <?php if($usuario["tipo"] == $value["idTipo"]) { ?> selected <?php } ?> value="<?php echo $value["idTipo"]; ?>"><?php echo $value["nombre"] ?></option>
+
+        <?php } ?>
+
+        </select>
+
     <?php
 
     $editarUsuario = new ControladorUsuarios();

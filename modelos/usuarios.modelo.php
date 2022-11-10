@@ -71,11 +71,12 @@ static public function mdlSeleccionarUsuarios($tabla, $item, $valor)
 
 	static public function mdlActualizarUsuario($tabla, $datos){
 	
-		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre=:nombre, email=:email, password=:password WHERE idUsuario= :idUsuario");
+		$stmt = Conexion::conectar()->prepare("UPDATE $tabla SET nombre=:nombre, email=:email, password=:password, tipo = :tipo WHERE idUsuario= :idUsuario");
 
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+		$stmt->bindParam(":tipo", $datos["tipo"], PDO::PARAM_INT);
 		$stmt->bindParam(":idUsuario", $datos["idUsuario"], PDO::PARAM_INT);
 
 		if($stmt->execute()){

@@ -79,6 +79,17 @@ class ControladorUsuarios{
 
 		if(isset($_POST["nombre"])){
 
+			if(preg_match('/^[a-zA-ZñÑáéíóúÁÉÍÓÚ ]+$/', $_POST["nombre"]))
+			{
+			 //validar no existe email
+
+			$item = "email";
+			$valor = $_POST["email"];
+
+			$usuario = ControladorUsuarios::ctrSeleccionarUsuarios($item, $valor);
+		
+			if(!$usuario){
+
 			$password = crypt($_POST["password"], '$2a$07$gongkosiosefopenguolgphst$');
 
 			$tabla = "usuarios";
@@ -104,6 +115,45 @@ class ControladorUsuarios{
 				</script>';
 
 			}
+		}else{
+
+			echo '<script>
+
+				Swal.fire({
+					
+					icon: "error",
+					title: "El email ya existe en la BD",
+					showConfirmButton: true,
+					confirmButtonText:"Cerrar"
+				  }).then(function(result){
+					if(result.value){
+						window.location = "index.php?pagina=registro";
+					}
+				  });
+
+				</script>';
+
+
+		}
+		}else{
+
+			echo '<script>
+
+				Swal.fire({
+					
+					icon: "error",
+					title: "No se permiten caracteres especiales en el nombre",
+					showConfirmButton: true,
+					confirmButtonText:"Cerrar"
+				  }).then(function(result){
+					if(result.value){
+						window.location = "index.php?pagina=registro";
+					}
+				  });
+
+				</script>';
+
+		}
 
 		}
 
@@ -128,7 +178,7 @@ class ControladorUsuarios{
 
 				$usuario = ControladorUsuarios::ctrSeleccionarUsuarios($item, $valor);
 
-				$password = $usuario["passwordActual"];
+				$password = $usuario["password"];
 			}
 
 
@@ -137,6 +187,7 @@ class ControladorUsuarios{
 			$datos = array("idUsuario" => $_POST["idUsuario"],
 							"nombre" => $_POST["editarNombre"],
 				           "email" => $_POST["editarEmail"],
+				           "tipo" => $_POST["tipo"],
 				           "password" => $password);
 
 			$respuesta = ModeloUsuarios::mdlActualizarUsuario($tabla, $datos);

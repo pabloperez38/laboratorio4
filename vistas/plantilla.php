@@ -36,6 +36,9 @@ session_start();
 	<!-- Latest sweetalert2-->
 	<script src="//cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
+	<script src="https://cdn.jsdelivr.net/npm/jquery-validation@1.19.5/dist/jquery.validate.js"></script>
+	
+
 </head>
 <body>
 	<!--=====================================
@@ -80,9 +83,8 @@ session_start();
 
 	</div>
 
-	<!--=====================================
-	CONTENIDO
-	======================================-->
+	<?php if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok")
+			{ ?>
 
 	<div class="container-fluid">
 		
@@ -94,11 +96,10 @@ session_start();
 
 		<?php 
 
-			if(isset($_SESSION["iniciarSesion"]) && $_SESSION["iniciarSesion"] == "ok")
-			{
+			
 				$usuarioLogueado = ControladorUsuarios::ctrSeleccionarUsuarios("idUsuario", $_SESSION["idUsuario"]);
 				echo "Bienvenido: ". $usuarioLogueado["nombre"];
-			}
+			
 
 			
 		?>
@@ -133,7 +134,21 @@ session_start();
 		</div>
 
 	</div>
-	
+
+	<?php }else { ?>
+
+		<div class="container-fluid">
+		
+		<div class="container py-5">
+
+		<?php include "paginas/ingreso.php"; ?>
+
+		</div>
+
+		</div>
+	<?php } ?>
+
+	<script src="vistas/js/validar.js"></script>
 	<script src="vistas/js/usuarios.js"></script>
 
 </body>

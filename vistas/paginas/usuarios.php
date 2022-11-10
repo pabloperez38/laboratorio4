@@ -22,7 +22,7 @@ $usuarios = ControladorUsuarios::ctrSeleccionarUsuarios(null, null);
             <td><?php echo $value["email"]; ?></td>
             <td><?php echo $value["fechaRegistro"]; ?></td>	
             <td><a href="index.php?pagina=editar&id=<?php echo $value["idUsuario"]; ?>" class="btn btn-warning"><i class="fa fa-edit"></i></a>
-            <button class="btn btn-danger btnEliminarUsuario" idUsuario="<?php echo $value["idUsuario"]; ?>"><i class="fa fa-trash"></i></button>
+            <button class="btn btn-danger btnEliminarUsuario" tipo="<?php echo $value["tipo"]; ?>" idUsuario="<?php echo $value["idUsuario"]; ?>"><i class="fa fa-trash"></i></button>
         </td>						
         </tr>
 
