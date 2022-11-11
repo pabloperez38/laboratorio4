@@ -1,4 +1,4 @@
-<form method="post" id="formRegistro">
+<form method="post" id="formRegistro" enctype="multipart/form-data">
 
     <div class="form-group">
         <label for="email">Nombre:</label>
@@ -35,6 +35,14 @@
         <?php } ?>
         
     </select>
+
+    </div>
+
+    <div class="form-group">
+
+    <input type="file" name="nuevaImagen" class="nuevaImagen">
+
+    <img src="" alt="" class="previsualizar" width="100">
 
     </div>
 

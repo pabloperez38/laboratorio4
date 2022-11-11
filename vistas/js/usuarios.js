@@ -32,3 +32,43 @@ $(".tablaUsuarios tbody").on("click", ".btnEliminarUsuario", function(){
     }
 
 })
+
+//traer datos del usuario
+$(".tablaUsuarios").on("click", ".btnVerUsuario", function(){
+
+	var idUsuario = $(this).attr("idUsuario");
+	
+	var datos = new FormData();
+	datos.append("idUsuario", idUsuario);
+
+	$.ajax({
+
+		url:"ajax/usuarios.ajax.php",
+		method: "POST",
+		data: datos,
+		cache: false,
+		contentType: false,
+		processData: false,
+		dataType: "json",
+		success: function(respuesta){
+
+      console.log(respuesta);
+			
+			$(".nombreUsuario").html(respuesta["nombre"]);
+			$(".email").html(respuesta["email"]);			
+
+			if(respuesta["imagen"] != ""){
+
+				$(".previsualizarEditar").attr("src", respuesta["imagen"]);
+
+			}else{
+
+				$(".previsualizarEditar").attr("src", "vistas/img/usuarios/default/anonymous.png");
+
+			}
+
+		}
+
+	});
+
+})

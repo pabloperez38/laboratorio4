@@ -90,13 +90,78 @@ class ControladorUsuarios{
 		
 			if(!$usuario){
 
+			//enviar imagen al servidor
+
+			
+				/*=============================================
+				VALIDAR IMAGEN
+				=============================================*/
+
+				$imagen = "vistas/imagenes/anonymous.png";
+
+				if(isset($_FILES["nuevaImagen"]["tmp_name"])){
+
+				 list($ancho, $alto) = getimagesize($_FILES["nuevaImagen"]["tmp_name"]);
+
+				 $nuevoAncho = $ancho;
+				 $nuevoAlto = $alto;				 
+
+				 /*=============================================
+				 DE ACUERDO AL TIPO DE IMAGEN APLICAMOS LAS FUNCIONES POR DEFECTO DE PHP
+				 =============================================*/
+
+				 if($_FILES["nuevaImagen"]["type"] == "image/jpeg"){
+
+					 /*=============================================
+					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+					 =============================================*/
+
+					 $aleatorio = mt_rand(100,99999999999);
+
+					 $imagen = "vistas/imagenes/".$aleatorio.".jpg";
+
+					 $origen = imagecreatefromjpeg($_FILES["nuevaImagen"]["tmp_name"]);						
+
+					 $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+					 imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+					 imagejpeg($destino, $imagen);
+
+				 }
+
+				 if($_FILES["nuevaImagen"]["type"] == "image/png"){
+
+					 /*=============================================
+					 GUARDAMOS LA IMAGEN EN EL DIRECTORIO
+					 =============================================*/
+
+					 $aleatorio = mt_rand(100,99999999999);
+
+					 $imagen = "vistas/magenes/".$aleatorio.".png";
+
+					 $origen = imagecreatefrompng($_FILES["nuevaImagen"]["tmp_name"]);						
+
+					 $destino = imagecreatetruecolor($nuevoAncho, $nuevoAlto);
+
+					 imagecopyresized($destino, $origen, 0, 0, 0, 0, $nuevoAncho, $nuevoAlto, $ancho, $alto);
+
+					 imagepng($destino, $imagen);
+
+				 }
+
+			 }
+
 			$password = crypt($_POST["password"], '$2a$07$gongkosiosefopenguolgphst$');
 
 			$tabla = "usuarios";
 
 			$datos = array("nombre" => $_POST["nombre"],
 				           "email" => $_POST["email"],
+						   "imagen" => $imagen,
 				           "password" => $password);
+
+						 
 
 			$respuesta = ModeloUsuarios::mdlRegistroUsuario($tabla, $datos);
 

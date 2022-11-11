@@ -41,13 +41,14 @@ static public function mdlSeleccionarUsuarios($tabla, $item, $valor)
 
 		#prepare() Prepara una sentencia SQL para ser ejecutada por el m�todo PDOStatement::execute(). La sentencia SQL puede contener cero o m�s marcadores de par�metros con nombre (:name) o signos de interrogaci�n (?) por los cuales los valores reales ser�n sustituidos cuando la sentencia sea ejecutada. Ayuda a prevenir inyecciones SQL eliminando la necesidad de entrecomillar manualmente los par�metros.
 
-		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, email, password) VALUES (:nombre, :email, :password)");
+		$stmt = Conexion::conectar()->prepare("INSERT INTO $tabla(nombre, email, password, imagen) VALUES (:nombre, :email, :password, :imagen)");
 
 		#bindParam() Vincula una variable de PHP a un par�metro de sustituci�n con nombre o de signo de interrogaci�n correspondiente de la sentencia SQL que fue usada para preparar la sentencia.
 
 		$stmt->bindParam(":nombre", $datos["nombre"], PDO::PARAM_STR);
 		$stmt->bindParam(":email", $datos["email"], PDO::PARAM_STR);
 		$stmt->bindParam(":password", $datos["password"], PDO::PARAM_STR);
+		$stmt->bindParam(":imagen", $datos["imagen"], PDO::PARAM_STR);
 
 		if($stmt->execute()){
 
