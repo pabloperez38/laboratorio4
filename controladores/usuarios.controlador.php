@@ -21,6 +21,7 @@ class ControladorUsuarios{
 				
 				$_SESSION["iniciarSesion"] = "ok";
 				$_SESSION["idUsuario"] = $respuesta["idUsuario"];
+				$_SESSION["tipo"] = $respuesta["tipo"];
 
 				echo '<script>			
 					
